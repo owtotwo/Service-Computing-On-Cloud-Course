@@ -10,7 +10,7 @@
 
 内容：[安装配置你的私有云](https://pmlpml.github.io/ServiceComputingOnCloud/ex-install-cloud)
 
-博客：[关于用VirtualBox在局域网内搭建云平台](./)
+博客：[关于用VirtualBox在局域网内搭建云平台](https://github.com/owtotwo/Service-Computing-On-Cloud-Course/tree/homework1)
 
 ### 实验二
 
