@@ -62,3 +62,43 @@
 
 反正Arch大法好。
 
+### Git
+
+这东西不用说了吧，基本每个工程类课程都会用到，附上两个比较实用的教程链接吧。
+
+初学者：[廖雪峰的Git教程](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+
+有基础者：[Git Turtorial](https://git-scm.com/docs/gittutorial)
+
+进阶者：[Pro Git - Version 2](https://git-scm.com/book/en/v2)
+
+### 虚拟机
+
+其实不一定要VirtualBox，只是这东西开源，用的人多，跨平台做得好，所以首推。但是性能不一定是最好的（其实就不是最好的）。
+
+Windows下[VMware Workstation](https://en.wikipedia.org/wiki/VMware_Workstation)能 发挥更好的性能（但要钱，有免费版但用起来，你懂的）；macOS下[Parallels Desktop](https://www.parallels.com/products/desktop/)最顺手无疑（但还是要钱）。
+
+### 网络连接模式
+
+一般来说分三种：NAT、Bridge、Host-only。当然不同的虚拟机还提供不同的额外的网络连接方式。
+
+[三种网络连接模式的区别（英文）](https://superuser.com/questions/227505/what-is-the-difference-between-nat-bridged-host-only-networking)
+
+[VirtualBox中的虚拟网络（英文）](https://www.virtualbox.org/manual/ch06.html)
+
+[实例讲解虚拟机3种网络模式(桥接、nat、Host-only)（中文）](https://www.cnblogs.com/ggjucheng/archive/2012/08/19/2646007.html)
+
+## 作业实现效果相关
+
+这个挺简单的，就装好后深度复制几个系统当做节点然后让它直接DHCP分配好地址，生成ssh-key后传到宿主机的authorized_keys中即可免密登录。
+
+![1539562549635](1539562549635.png)
+
+其他节点同理，就不多说了。
+
+## 结语
+
+其实算说得挺多的了，每一个去了解一下，挖深一点，就足以花费足够多的时间了。
+
+还有一些没有提到，比如包管理、桌面用gnome还是unity、虚拟机硬件配置选择、虚拟机两种不同的复制方法（完全复制和链接复制，其实就是全量和增量），命令行文本编辑工具等等，可讲的东西很多，有机会的话下次再讲吧。
+
