@@ -16,7 +16,7 @@
 
 内容：[安装 Golang 开发环境](https://pmlpml.github.io/ServiceComputingOnCloud/ex-install-go)
 
-博客：[关于安装 Golang 开发环境的一些内容](./)
+博客：[关于安装 Golang 开发环境的一些内容](https://github.com/owtotwo/Service-Computing-On-Cloud-Course/tree/homework2)
 
 ### 实验三
 
