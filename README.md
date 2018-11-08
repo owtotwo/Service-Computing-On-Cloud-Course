@@ -25,3 +25,9 @@
 验证：[使用接口与接口断言会产生性能损失吗？](./)
 
 代码：[开发简单 CLI 程序 - 实现放在Github](https://github.com/owtotwo/Service-Computing-On-Cloud-Course/tree/homework3)
+
+### 实验四
+
+内容：[CLI 命令行实用程序开发实战 - Agenda](https://pmlpml.github.io/ServiceComputingOnCloud/ex-cli-agenda)
+
+代码：[Agenda](https://github.com/owtotwo/agenda)
