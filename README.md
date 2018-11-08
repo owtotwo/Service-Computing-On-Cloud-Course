@@ -30,4 +30,4 @@
 
 内容：[CLI 命令行实用程序开发实战 - Agenda](https://pmlpml.github.io/ServiceComputingOnCloud/ex-cli-agenda)
 
-代码：[Agenda](https://github.com/owtotwo/agenda)
+代码：[Agenda - Go Version for Service Computing Course](https://github.com/owtotwo/agenda)
