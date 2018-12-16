@@ -96,7 +96,7 @@
 
 像浏览器输入 http://localhost:8080/static/ 获取静态文件服务
 
-![03](images/03.png)
+![03](images/静态页面.png)
 
 可获取Todos的用法
 
@@ -115,41 +115,45 @@
 
 + 进行注册：
 
-![04](images/04.png)
+![注册](注册.png)
 
 注册的用户名不能重复：
 
-![05](images/05.png)
+![05](images/注册已存在用户.png)
 
 + 增加todo项
 
 输入的用户名或密码为空
 
-![06](images/06.png)
+![06](images/用户名或密码为空.png)
 
 用户名或密码错误
 
-![07](images/07.png)
+![07](images/用户名或密码错误.png)
 
 操作成功
 
-![08](images/08.png)
+![08](images/成功添加todo.png)
 
 + 查看所有的todo项
 
-![09](images/09.png)
+![09](images/查看所有todo项.png)
+
++ 多次添加后
+
+![show三项todo](show三项todo.png)
 
 + 删除todo项
 
-itemIndex是要删除的todos项的序号(大于0，小于todos项总数)，只能为数字
+itemIndex是要删除的todos项的序号(从零开始，小于todos项总数)，只能为数字
 
 非法itemIndex
 
-![11](images/11.png)
+![删除索引不合法](删除索引不合法.png)
 
 删除成功并查看删除后的效果
 
-![12](images/12.png)
+![删除之后剩两项](删除之后剩两项.png)
 
 ## 提交表单，并输出一个表格
 
@@ -161,26 +165,29 @@ itemIndex是要删除的todos项的序号(大于0，小于todos项总数)，只�
 
 + 注册界面
 
-![13](images/13.png)
+![注册界面](注册界面.png)
 
 提交表单后得到注册结果
 
-![14](images/14.png)
+![提交表单后的注册结果](提交表单后的注册结果.png)
 
 + 增加todos项
 
-![15](images/15.png)
+![添加todo项界面](添加todo项界面.png)
+
+![在web界面添加todo项](在web界面添加todo项.png)
 
 查看所有的todos项
 
-![16](images/16.png)
+![showItem界面和结果](showItem界面和结果.png)
 
 + 删除todos项
 
-![17](images/17.png)
+![删除todo项页面及结果](删除todo项页面及结果.png)
 
 再次查看todos项
-![18](images/18.png)
+
+![web删除后再次查看show](web删除后再次查看show.png)
 
 
 
@@ -189,21 +196,19 @@ itemIndex是要删除的todos项的序号(大于0，小于todos项总数)，只�
 
 在程序中都是以501作为状态码返回
 
-![01](images/01.png)
-
-![02](images/02.png)
+![对unknown路由返回501](对unknown路由返回501.png)
 
 ## 其他
 
-+ 数据库的用户ID使用UUID生成，用户密码进行MD5加密
++ 使用boltd来在web上查看数据库使用情况（数据库的用户ID使用UUID生成，用户密码进行MD5加密）
 
-  ![20](images/20.png)
+  ![使用boltd来在web上查看数据库使用情况](使用boltd来在web上查看数据库使用情况.png)
 
 + 浏览器上显示的页面除了static外其他都使用了http/template模板
 
 + 程序运行过程中服务器的输出截图
   
-  ![19](images/19.png)
+  ![服务端运行log](服务端运行log.png)
 
 ### At last, thanks for reviewing my code!
 
@@ -211,7 +216,7 @@ itemIndex是要删除的todos项的序号(大于0，小于todos项总数)，只�
 
 + 本次作业的代码结构如下：
 
-![21](images/21.png)
+![21](images/代码结构.png)
 
 上一层调用下一层，不越级:
 

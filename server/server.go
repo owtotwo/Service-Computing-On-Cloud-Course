@@ -3,6 +3,7 @@ package server
 import (
 	"os"
 	"net/http"
+	"log"
 
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
@@ -30,9 +31,9 @@ func NewServer() *negroni.Negroni {
 func initRoutes(muxInstance *mux.Router, formatter *render.Render) {
 	// ---------------------------- get paths ------------------------------
 	// get current path
-	var currentPath string
-	if currentPath, err = os.Getwd(); err != nil {
-		panic(err)
+	currentPath, err := os.Getwd();
+	if err != nil {
+		log.Fatal(err)
 	}
 	// directory of static html files
 	staticDir = currentPath + "/assets/"

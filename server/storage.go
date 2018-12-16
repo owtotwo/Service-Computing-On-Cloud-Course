@@ -4,6 +4,8 @@ import (
 	"errors"
 	"strings"
 	"fmt"
+	"time"
+	"log"
 
 	"github.com/boltdb/bolt"
 	uuid "github.com/satori/go.uuid"
@@ -21,7 +23,7 @@ func init() {
 	defer db.Close()
 	
 	db.Update(func(tx *bolt.Tx) error {
-		b, err := tx.CreateBucket([]byte("Todos"))
+		_, err := tx.CreateBucket([]byte("Todos"))
 		if err != nil {
 			return fmt.Errorf("create bucket: %s", err)
 		}
@@ -36,6 +38,7 @@ func init() {
 // do some operation on database and close connect after that
 // return the result of operation (true/false)
 func operateOnDB(function interface{}, username string, password string, parameter interface{}) ([]string, bool) {
+
 	db, err := bolt.Open("todolist.db", 0600, &bolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		log.Fatal(err)
@@ -85,7 +88,7 @@ func operateOnDB(function interface{}, username string, password string, paramet
 
 }
 
-// check if user exists in database by username, return bool result and user's id if exsits
+// check if user exists in database by username and password, return bool result and user's id if exsits
 func dbQueryUser(db *bolt.DB, username string, password string) (bool, string) {
 	var id string
 
@@ -93,20 +96,40 @@ func dbQueryUser(db *bolt.DB, username string, password string) (bool, string) {
 		// Assume bucket exists and has keys
 		todosBucket := tx.Bucket([]byte("Todos"))
 
-		return todosBucket.ForEach(func(k, v *Bucket) error {
-			fmt.Printf("key=%s\n", k)
-			if v.Get([]byte("username")) == username && v.Get([]byte("password")) == password {
-				id = k
+		return todosBucket.ForEach(func(k, _ []byte) error {
+			v := todosBucket.Bucket(k)
+			if string(v.Get([]byte("username"))) == username && 
+			   string(v.Get([]byte("password"))) == password {
+				id = string(k)
 			}
 			return nil
 		})
 	})
 
-	if id != nil {
+	if id != "" {
 		return true, id
 	}
 
 	return false, ""
+}
+
+// check if user exists in database by username, return bool result
+func dbQueryUserIfExist(db *bolt.DB, username string) bool {
+	var result bool
+
+	db.View(func(tx *bolt.Tx) error {
+		todosBucket := tx.Bucket([]byte("Todos"))
+
+		return todosBucket.ForEach(func(k, _ []byte) error {
+			v := todosBucket.Bucket(k)
+			if string(v.Get([]byte("username"))) == username {
+				result = true
+			}
+			return nil
+		})
+	})
+
+	return result
 }
 
 // get todolist string from database by username and password
@@ -114,12 +137,7 @@ func dbQueryTodos(db *bolt.DB, id string) string {
 	var todos string // get todos
 
 	db.View(func(tx *bolt.Tx) error {
-		todosBucket := tx.Bucket([]byte("Todos"))
-		if userBucket, err := todosBucket.Bucket([]byte(id)); err != nil {
-			return err
-		}
-
-		todos = userBucket.Get([]byte("todos"))
+		todos = string(tx.Bucket([]byte("Todos")).Bucket([]byte(id)).Get([]byte("todos")))
 		return nil
 	})
 
@@ -130,22 +148,28 @@ func dbQueryTodos(db *bolt.DB, id string) string {
 // only do some main operations: add user, update or select todolist
 // add user in database
 func addUserIntoDB(db *bolt.DB, username string, password string) error {
-	return db.Update(func(tx *bolt.Tx) error {
-		todosBucket := tx.Bucket([]byte("Todos"))
-		if userBucket, err := todosBucket.CreateBucketIfNotExists([]byte(tools.GetUUID())); err != nil {
-			return err
-		}
-		if err := userBucket.Put([]byte("username"), []byte(username)); err != nil {
-			return err
-		}
-		if err := userBucket.Put([]byte("password"), []byte(username)); err != nil {
-			return err
-		}
-		if err := userBucket.Put([]byte("todos"), []byte("")); err != nil {
-			return err
-		}
-		return nil
-	})
+	if dbQueryUserIfExist(db, username) == false {
+		return db.Update(func(tx *bolt.Tx) error {
+
+			userBucket, err := tx.Bucket([]byte("Todos")).CreateBucketIfNotExists([]byte(getUUID()))
+			if err != nil {
+				return err
+			}
+			
+			if err := userBucket.Put([]byte("username"), []byte(username)); err != nil {
+				return err
+			}
+			if err := userBucket.Put([]byte("password"), []byte(password)); err != nil {
+				return err
+			}
+			if err := userBucket.Put([]byte("todos"), []byte("")); err != nil {
+				return err
+			}
+			return nil
+		})
+	}
+
+	return errors.New("This account is existed.")
 }
 
 func getItemsById(db *bolt.DB, id string) []string {
@@ -160,10 +184,7 @@ func addItemIntoDB(db *bolt.DB, username string, password string, item string) e
 		var todosList []string = append(getItemsById(db, id), item)
 
 		return db.Update(func(tx *bolt.Tx) error {
-			todosBucket := tx.Bucket([]byte("Todos"))
-			if userBucket, err := todosBucket.Bucket([]byte(id)); err != nil {
-				return err
-			}
+			userBucket := tx.Bucket([]byte("Todos")).Bucket([]byte(id))
 			if err := userBucket.Put([]byte("todos"), []byte(strings.Join(todosList, ","))); err != nil {
 				return err
 			}
@@ -197,11 +218,8 @@ func deleteItemIntoDB(db *bolt.DB, username string, password string, itemIndex i
 		todosList = append(todosList[:itemIndex], todosList[itemIndex+1:]...)
 
 		return db.Update(func(tx *bolt.Tx) error {
-			todosBucket := tx.Bucket([]byte("Todos"))
-			if userBucket, err := todosBucket.Bucket([]byte(id)); err != nil {
-				return err
-			}
-			if err := userBucket.Put([]byte("todos"), []byte(todosList)); err != nil {
+			userBucket := tx.Bucket([]byte("Todos")).Bucket([]byte(id))
+			if err := userBucket.Put([]byte("todos"), []byte(strings.Join(todosList, ","))); err != nil {
 				return err
 			}
 			return nil
@@ -223,6 +241,10 @@ func showItemsFromDB(db *bolt.DB, username string, password string) ([]string, e
 }
 
 // auxiliary functions for getting uuid
-func GetUUID() string {
-	return uuid.NewV4().String()
+func getUUID() string {
+	u, err := uuid.NewV4()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return u.String() 
 }

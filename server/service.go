@@ -57,7 +57,7 @@ func isEmptyUsernameOrPassword(username string, password string) bool {
 func registerByUsernameAndPassword(username string, password string) TodoListOperationResult {
 	if isEmptyUsernameOrPassword(username, password) { // if one of important parameters is empty
 		return TodoListOperationResult{Operation: REGISTER, Username: username, Result: FAIL, Message: messages["EmptyUsernameOrPassword"]}
-	} else if _, ok := operateOnDB(addUserIntoDB, username, tools.MD5Encryption(password), nil); ok {
+	} else if _, ok := operateOnDB(addUserIntoDB, username, md5Encryption(password), nil); ok {
 		return TodoListOperationResult{Operation: REGISTER, Username: username, Result: SUCCESS, Message: messages["RegisterSuccess"]}
 	}
 	return TodoListOperationResult{Operation: REGISTER, Username: username, Result: FAIL, Message: messages["RegisterFail"]}
@@ -76,7 +76,7 @@ func addItemByUsernamePasswordItem(username string, password string, item string
 		return TodoListOperationResult{Operation: ADD, Username: username, Result: FAIL, Message: messages["EmptyUsernameOrPassword"]}
 	} else if isEmptyItem(item) {
 		return TodoListOperationResult{Operation: ADD, Username: username, Result: FAIL, Message: messages["EmptyItem"]}
-	} else if _, ok := operateOnDB(addItemIntoDB, username, tools.MD5Encryption(password), item); ok {
+	} else if _, ok := operateOnDB(addItemIntoDB, username, md5Encryption(password), item); ok {
 		return TodoListOperationResult{Operation: ADD, Username: username, Result: SUCCESS, Message: messages["AddSuccess"]}
 	}
 	return TodoListOperationResult{Operation: ADD, Username: username, Result: FAIL, Message: messages["AddFail"]}
@@ -90,7 +90,7 @@ func deleteItemByUsernameAndPasswordItemindex(
 	if isEmptyUsernameOrPassword(username, password) { // if one of important parameters is empty
 		return TodoListOperationResult{Operation: DELETE, Username: username, Result: FAIL, Message: messages["EmptyUsernameOrPassword"]}
 	} else if itemIndex, err := strconv.Atoi(itemIndexString); err == nil {
-		if _, ok := operateOnDB(deleteItemIntoDB, username, tools.MD5Encryption(password), itemIndex+1); ok {
+		if _, ok := operateOnDB(deleteItemIntoDB, username, md5Encryption(password), itemIndex+1); ok {
 			return TodoListOperationResult{Operation: DELETE, Username: username, Result: SUCCESS, Message: messages["DeleteSuccess"]}
 		}
 	}
@@ -104,7 +104,7 @@ func showItemsByUsernameAndPassword(username string, password string) TodoListOp
 	if isEmptyUsernameOrPassword(username, password) { // if one of important parameters is empty
 		return TodoListOperationResult{Operation: SHOW, Username: username, Result: FAIL,
 			Message: messages["EmptyUsernameOrPassword"]}
-	} else if todoListOperationResult, ok := operateOnDB(showItemsFromDB, username, tools.MD5Encryption(password), nil); ok {
+	} else if todoListOperationResult, ok := operateOnDB(showItemsFromDB, username, md5Encryption(password), nil); ok {
 		return TodoListOperationResult{
 			Operation: SHOW, Username: username, Todos: todoListOperationResult[1:], Result: SUCCESS, // remove the first item(empty) of todoListOperationResult
 			Message: fmt.Sprintf(messages["ShowSuccess"], len(todoListOperationResult)-1)}
@@ -112,8 +112,8 @@ func showItemsByUsernameAndPassword(username string, password string) TodoListOp
 	return TodoListOperationResult{Operation: SHOW, Username: username, Result: FAIL, Message: messages["ShowFail"]}
 }
 
-// auxiliary functions - MD5 hash function
-func MD5Encryption(text string) string {
+// auxiliary functions - md5 hash function
+func md5Encryption(text string) string {
 	hash := md5.New()
 	io.WriteString(hash, text)
 	return fmt.Sprintf("%x", hash.Sum(nil))
