@@ -9,7 +9,7 @@ services:
   mysql_server:
     container_name: mysql_server
     restart: always
-    image: mysql/mysql-server:5.7
+    image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 'todolistpassword'
     network_mode: 'host'
