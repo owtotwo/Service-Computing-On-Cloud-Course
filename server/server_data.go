@@ -97,6 +97,7 @@ func init() {
 
 	// create database and table when init package
 	db, err := openDB(createDBPara)
+	defer db.Close()
 	if err != nil || db.Ping() != nil {
 		panic(err || db.Ping())
 	}
