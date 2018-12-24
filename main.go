@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"fmt"
 
 	"github.com/owtotwo/Service-Computing-On-Cloud-Course/server"
 	flag "github.com/spf13/pflag"
@@ -25,4 +26,5 @@ func main() {
 
 	serverInstance := server.NewServer()
 	serverInstance.Run("0.0.0.0:" + port)
+	fmt.Println("listening 0.0.0.0:" + port + "...")
 }

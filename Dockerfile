@@ -20,4 +20,4 @@ WORKDIR /root/
 COPY --from=builder /myapp/todolist .
 EXPOSE 8080
 RUN echo 'while ! mysqladmin ping -h 172.27.0.1 -P 3307 --silent; do echo "wait a second" && sleep 1; done' > waitForMySQL.sh
-CMD ["sh", "-c", "sh waitForMySQL.sh && ./todolist"]
+CMD ["sh", "-c", "sh waitForMySQL.sh && echo 'Start todolist!' && ./todolist"]
