@@ -70,8 +70,11 @@ func operateOnDB(function interface{}, username string, password string, paramet
 // try to open database and return error if fails
 func openDB(DBpara string) (*sql.DB, error) {
 	db, err := sql.Open("mysql", DBpara)
-	if err != nil || db.Ping() != nil {
-		db.Close()
+	defer db.Close()
+	if err != nil {
+		return nil, err
+	}
+	if err = db.Ping(); err != nil {
 		return nil, err
 	}
 	return db, nil
