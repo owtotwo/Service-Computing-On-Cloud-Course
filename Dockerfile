@@ -14,10 +14,10 @@ RUN apk --no-cache add git \
   github.com/owtotwo/Service-Computing-On-Cloud-Course
 
 FROM alpine:latest  
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates \
+  && apk --no-cache add mysql-client
 WORKDIR /root/
 COPY --from=builder /myapp/todolist .
 EXPOSE 8080
-RUN apk --no-cache add mysql-client \
-  && while ! mysqladmin ping -h"127.0.0.1:3307" --silent; do sleep 1; done
-CMD ["./todolist"]
+# RUN echo 'while ! mysqladmin ping -h"127.0.0.1:3307" --silent; do sleep 1; done' > waitForMySQL.sh
+CMD ["while ! mysqladmin ping -h 127.0.0.1:3307 --silent; do sleep 1; done && ./todolist"]
