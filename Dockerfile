@@ -26,6 +26,8 @@ update user set password=PASSWORD('mynewpassword') where User='root';\
 flush privileges;" > grantPriv.sql
 CMD ["sh", "-c", "sh waitForMySQL.sh \
 && echo 'MySQL-Server is on Ready!' \
+&& ls /var/run /run \
+&& file /var/run /run \
 && mysql --user='root' --password='todolistpassword' < grantPriv.sql \
 && echo 'Start todolist!' \
 && ./todolist"]

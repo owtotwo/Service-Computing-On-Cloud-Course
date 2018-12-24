@@ -5,13 +5,12 @@ services:
     build: .
     depends_on:
       - mysql_server
-    links:
-      - 'mysql_server'
-    expose:
-      - '8080'
+    network_mode: 'host'
   mysql_server:
     container_name: mysql_server
     restart: always
     image: mysql/mysql-server:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 'todolistpassword'
+    ports:
+      - '3306:3306'
