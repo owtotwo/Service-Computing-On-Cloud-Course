@@ -5,6 +5,7 @@ services:
     build: .
     depends_on:
       - mysql_server
+      - wait_for_mysql
     network_mode: 'host'
     # port:
     #   - '8080:8080'
@@ -19,9 +20,16 @@ services:
     #   - my-datavolume:/var/lib/mysql
     ports:
       - '3307:3306'
-    healthcheck:
-      test: ["CMD", "mysql", "--protocol", "TCP", "-u", "root", "-p", "todolistpassword", "-e", "show databases;"]
-      interval: 0s
-      timeout: 10s
-      retries: 3
-      start_period: 45s
+    # healthcheck:
+    #   test: ["CMD", "mysql", "--protocol", "TCP", "-u", "root", "-p", "todolistpassword", "-e", "show databases;"]
+    #   interval: 0s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 45s
+  wait_for_mysql:
+    container_name: wait_for_mysql
+    image: digit/wait-for-mysql
+    depends_on:
+      - mysql_server
+    links:
+      - "mysql_server"
