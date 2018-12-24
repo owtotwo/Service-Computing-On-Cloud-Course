@@ -97,8 +97,8 @@ func init() {
 
 	// create database and table when init package
 	db, err := openDB(createDBPara)
-	if err != nil {
-		panic(err)
+	if err != nil || db.Ping() != nil {
+		panic(err || db.Ping())
 	}
 
 	dbExec(db, dbStatements["CREATEDB"])    // create database
