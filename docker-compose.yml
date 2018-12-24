@@ -5,8 +5,7 @@ services:
     build: .
     depends_on:
       - mysql_server
-    network_mode:
-      - 'host'
+    network_mode: 'host'
     # port:
     #   - '8080:8080'
     #   - '3307:3306'
