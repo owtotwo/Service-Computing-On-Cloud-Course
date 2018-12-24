@@ -7,7 +7,7 @@ RUN apk --no-cache add git \
   && go get -d -v github.com/go-sql-driver/mysql \
   && go get -d -v github.com/satori/go.uuid \
   && mkdir -p $GOPATH/src/github.com/owtotwo/ \
-  && git clone https://github.com/owtotwo/Service-Computing-On-Cloud-Course.git --branch homework7 --single-branch $GOPATH/src/github.com/owtotwo/ \
+  && git clone https://github.com/owtotwo/Service-Computing-On-Cloud-Course.git --branch homework7 --single-branch $GOPATH/src/github.com/owtotwo/Service-Computing-On-Cloud-Course \
   && CGO_ENABLED=0 go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o todolist \
   github.com/owtotwo/Service-Computing-On-Cloud-Course
 
