@@ -1,0 +1,18 @@
+version: '1'
+services:
+  todolist:
+    build: .
+    depends_on:
+      - mysql_server
+    ports:
+      - '8080:8080'
+  mysql_server:
+    container_name: flask_mysql
+    restart: always
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'todolistpassword'
+    # volumes:
+    #   - my-datavolume:/var/lib/mysql
+    ports:
+      - '3307:3306'

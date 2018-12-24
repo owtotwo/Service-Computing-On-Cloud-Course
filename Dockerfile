@@ -1,6 +1,7 @@
 FROM golang:alpine AS builder
 WORKDIR /myapp/
-RUN go get -d -v github.com/unrolled/render \
+RUN apk --no-cache add git \
+  && go get -d -v github.com/unrolled/render \
   && go get -d -v github.com/codegangsta/negroni \
   && go get -d -v github.com/gorilla/mux \
   && go get -d -v github.com/go-sql-driver/mysql \
@@ -14,4 +15,5 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /myapp/todolist .
+EXPOSE 8080
 CMD ["./app"]
