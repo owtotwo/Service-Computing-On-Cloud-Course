@@ -3,8 +3,6 @@ package server
 import (
 	"database/sql"
 	"fmt"
-	"go/build"
-	"html/template"
 	"os"
 )
 

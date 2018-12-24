@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"io"
+	"log"
 
 	uuid "github.com/satori/go.uuid"
 )
