@@ -75,15 +75,8 @@ var messages = map[string]string{
 	"ShowFail":    "show fail: please check username and password",
 }
 
-
-
-
-
 // exec some simple sql statement
 func dbExec(db *sql.DB, DBStatement string) {
-	if db.Ping() != nil {
-		panic(db)
-	}
 	if _, err := db.Exec(DBStatement); err != nil {
 		panic(err)
 	}
@@ -103,10 +96,11 @@ func init() {
 
 	// create database and table when init package
 	db, err := openDB(createDBPara)
-	defer db.Close()
-	if err != nil || db.Ping() != nil {
-		panic(err || db.Ping())
+	if err != nil {
+		panic(err)
 	}
+	defer db.Close()
+
 
 	dbExec(db, dbStatements["CREATEDB"])    // create database
 	dbExec(db, dbStatements["USEDB"])       // use database
