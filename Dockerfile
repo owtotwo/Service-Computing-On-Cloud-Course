@@ -20,7 +20,10 @@ WORKDIR /root/
 COPY --from=builder /myapp/todolist .
 EXPOSE 8080
 RUN echo 'while ! mysqladmin ping -h 127.0.0.1 -P 3306 --silent; do echo "wait a second" && sleep 1; done' > waitForMySQL.sh
-RUN echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';" > grantPriv.sql
+RUN echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';\
+use mysql;
+update user set password=PASSWORD('mynewpassword') where User='root';
+flush privileges;" > grantPriv.sql
 CMD ["sh", "-c", "sh waitForMySQL.sh \
 && echo 'MySQL-Server is on Ready!' \
 && mysql --user='root' --password='todolistpassword' < grantPriv.sql \
