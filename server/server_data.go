@@ -88,8 +88,8 @@ func init() {
 	var (
 		username = "root"             // the username of mysql database
 		password = "todolistpassword" // the password of the username
-		addrs    = "172.27.0.1"        // the tcp address
-		port     = "3307"             // the port
+		addrs    = "127.0.0.1"        // the tcp address
+		port     = "3306"             // the port
 	)
 	dbPara = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&timeout=30s", username, password, addrs, port, dbName)
 	createDBPara = fmt.Sprintf("%s:%s@tcp(%s:%s)/", username, password, addrs, port)

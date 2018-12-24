@@ -12,5 +12,4 @@ services:
     image: mysql/mysql-server:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 'todolistpassword'
-    ports:
-      - '3307:3306'
+    network_mode: 'host'
