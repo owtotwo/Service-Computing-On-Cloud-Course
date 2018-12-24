@@ -1,16 +1,12 @@
 package server
 
 import (
-	"os"
 	"net/http"
-	"log"
 
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/mux"
 	"github.com/unrolled/render"
 )
-
-var staticDir string // directory of static html files
 
 func NewServer() *negroni.Negroni {
 	formatter := render.New(render.Options{
@@ -29,16 +25,6 @@ func NewServer() *negroni.Negroni {
 }
 
 func initRoutes(muxInstance *mux.Router, formatter *render.Render) {
-	// ---------------------------- get paths ------------------------------
-	// get current path
-	currentPath, err := os.Getwd();
-	if err != nil {
-		log.Fatal(err)
-	}
-	// directory of static html files
-	staticDir = currentPath + "/assets/"
-	// ---------------------------------------------------------------------
-
 	muxInstance.HandleFunc("/api/register", apiRegisterHandler(formatter))
 	muxInstance.HandleFunc("/api/add", apiAddItemHandler(formatter))
 	muxInstance.HandleFunc("/api/delete", apiDeleteItemHandler(formatter))
