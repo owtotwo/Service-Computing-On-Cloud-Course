@@ -5,9 +5,11 @@ services:
     build: .
     depends_on:
       - mysql_server
-    ports:
-      - '8080:8080'
-      - '3307:3306'
+    network_mode:
+      - 'host'
+    # port:
+    #   - '8080:8080'
+    #   - '3307:3306'
   mysql_server:
     container_name: mysql_server
     restart: always
