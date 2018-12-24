@@ -6,11 +6,22 @@ services:
     depends_on:
       - mysql_server
     network_mode: 'host'
+    # port:
+    #   - '8080:8080'
+    #   - '3307:3306'
   mysql_server:
     container_name: mysql_server
     restart: always
-    build: ./mysql_server_docker
+    image: mysql/mysql-server:5.7
     environment:
       MYSQL_ROOT_PASSWORD: 'todolistpassword'
+    # volumes:
+    #   - my-datavolume:/var/lib/mysql
     ports:
       - '3307:3306'
+    # healthcheck:
+    #   test: ["CMD", "mysql", "--protocol", "TCP", "-u", "root", "-p", "todolistpassword", "-e", "show databases;"]
+    #   interval: 0s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 45s

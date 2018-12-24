@@ -18,4 +18,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /myapp/todolist .
 EXPOSE 8080
+# RUN apk --no-cache add mysql-client \
+#   && while ! mysqladmin ping -h"127.0.0.1:3307" --silent; do sleep 1 done
+RUN while ! mysqladmin ping -h"127.0.0.1:3307" --silent; do sleep 1 done
 CMD ["./todolist"]
