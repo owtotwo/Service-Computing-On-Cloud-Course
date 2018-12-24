@@ -1,13 +1,14 @@
 version: '2'
 services:
   todolist:
+    container_name: todolist_webapp
     build: .
     depends_on:
       - mysql_server
     ports:
       - '8080:8080'
   mysql_server:
-    container_name: flask_mysql
+    container_name: mysql_server
     restart: always
     image: mysql/mysql-server:5.7
     environment:

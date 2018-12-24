@@ -24,5 +24,5 @@ func main() {
 	}
 
 	serverInstance := server.NewServer()
-	serverInstance.Run(":" + port)
+	serverInstance.Run("0.0.0.0:" + port)
 }
