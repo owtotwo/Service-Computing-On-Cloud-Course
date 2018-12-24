@@ -74,8 +74,12 @@ func openDB(DBpara string) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err = db.Ping(); err != nil {
-		return nil, err
+	retries := 0
+	for retries < 20 {
+		retries += 1
+		if err = db.Ping(); err != nil && retries >= 20 {
+			return nil, err
+		}
 	}
 	return db, nil
 }
