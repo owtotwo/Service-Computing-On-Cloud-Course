@@ -18,4 +18,4 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /myapp/todolist .
 EXPOSE 8080
-CMD ["./app"]
+CMD ["./todolist"]
