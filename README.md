@@ -43,3 +43,9 @@
 内容：[简单 web 服务与客户端开发实战](https://pmlpml.github.io/ServiceComputingOnCloud/ex-services)
 
 代码：[开发 web 服务程序 - todolist v2](https://github.com/owtotwo/Service-Computing-On-Cloud-Course/tree/homework6)
+
+### 实验七
+
+内容：[应用容器化](https://pmlpml.github.io/ServiceComputingOnCloud/ex-containerization)
+
+代码：[使用 docker 及 docker-compose 一键部署 todolist](https://github.com/owtotwo/Service-Computing-On-Cloud-Course/tree/homework7)
