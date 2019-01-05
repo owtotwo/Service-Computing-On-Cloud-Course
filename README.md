@@ -1,4 +1,10 @@
-# 开发 web 服务程序(Todos2.0)
+# 开发 web 服务程序(Todos2.0) - Docker 一键部署
+
+## 直接部署
+
+Requirement: Docker-ce && Docker-compose
+
+> $ sudo docker-compose up
 
 ## [基本要求](https://pmlpml.github.io/ServiceComputingOnCloud/ex-services)
 
